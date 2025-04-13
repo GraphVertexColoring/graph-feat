@@ -1,7 +1,21 @@
 import os
+import shutil
+import gzip
 
-def get_col_files(path):
-    return [f for f in os.listdir(path) if f.endswith('.col')]
+def unzip_gz_files(path):
+    unzipped_files = []
+    for file_name in os.listdir(path):
+        if file_name.endswith('.gz'):
+            gz_path = os.path.join(path, file_name)
+            col_file_name = file_name[:-3]  # remove .gz extension
+            col_path = os.path.join(path, col_file_name)
+
+            with gzip.open(gz_path, 'rb') as f_in:
+                with open(col_path, 'wb') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+
+            unzipped_files.append(col_path)
+    return unzipped_files
 
 def read_col_file(file_path):
     edges = []
@@ -17,3 +31,15 @@ def read_col_file(file_path):
                 edges.append((n1-1, n2-1))  # Convert to 0-based index
 
     return edges, dimension
+
+
+def process_col_files(path):
+    unzipped_files = unzip_gz_files(path)
+    results = []
+
+    for file_path in unzipped_files:
+        edges, dimension = read_col_file(file_path)
+        results.append((file_path, edges, dimension))
+        os.remove(file_path)  # Clean up unzipped file
+
+    return results
