@@ -44,6 +44,7 @@ def generate_feature_file(path, output_filename="InstanceFeatures.csv"):
 
     print(f"Feature file saved as {output_filename}")
 
+#to be made more generic
 def run():
     path = "../Resources/instances"
     output_filename = "../Resources/InstanceFeatures.csv"
