@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="graph_feature",
-    version="0.1",
+    version="0.2",
     packages=find_packages(),
     install_requires=["numpy"],
     author="Frederik Mortensen Dam",
@@ -10,7 +10,7 @@ setup(
     description="GVC feature extraction package",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/DenatYeti/graph_feature",
+    url="https://github.com/GraphVertexColoring/graph_feat",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

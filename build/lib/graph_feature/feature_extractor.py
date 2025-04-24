@@ -31,4 +31,41 @@ def extract_features(file_name, edges, dimension):
     total_triplets = dimension * (dimension - 1) * (dimension - 2) / 6
     features['clustering_coef'] = closed_triplets / total_triplets if dimension >= 3 else 0
 
+    spectral_features = compute_spectral_features(adjacency, laplacian)
+    features[file_name].update(spectral_features)
+
+    return features
+
+def compute_spectral_features(adjacency, laplacian):
+    features = {}
+
+    # Adjacency eigenvalues
+    eig_adj, _ = np.linalg.eig(adjacency)
+    abs_eig_adj = np.abs(eig_adj)
+    features['energy'] = np.mean(abs_eig_adj)
+
+    mean_adj = np.mean(eig_adj)
+    variance_adj = np.mean((eig_adj - mean_adj)**2)
+    features['std_devi_eig_adj'] = math.sqrt(variance_adj)
+
+    sorted_adj = sorted(eig_adj, key=lambda x: x.real)
+    features['small_eig_adj'] = sorted_adj[0].real
+    features['sec_small_eig_adj'] = sorted_adj[1].real
+    features['large_eig_adj'] = sorted_adj[-1].real
+    features['sec_large_eig_adj'] = sorted_adj[-2].real
+    features['gap_eig_adj'] = abs(sorted_adj[-1] - sorted_adj[-2]).real
+
+    # Laplacian eigenvalues
+    eig_lap, _ = np.linalg.eig(laplacian)
+    sorted_lap = sorted(eig_lap, key=lambda x: x.real)
+    features['connectivity'] = sorted_lap[1].real
+
+    non_zero_lap = [x for x in sorted_lap if not np.isclose(x, 0)]
+    features['small_nonzero_eig_lap'] = non_zero_lap[0].real if len(non_zero_lap) > 0 else np.nan
+    features['sec_small_nonzero_eig_lap'] = non_zero_lap[1].real if len(non_zero_lap) > 1 else np.nan
+
+    features['large_eig_lap'] = sorted_lap[-1].real
+    features['sec_large_eig_lap'] = sorted_lap[-2].real
+    features['gap_eig_lap'] = abs(sorted_lap[-1] - non_zero_lap[0]).real if len(non_zero_lap) > 0 else np.nan
+
     return features
