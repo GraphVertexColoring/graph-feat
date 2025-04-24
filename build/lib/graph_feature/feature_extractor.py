@@ -31,14 +31,6 @@ def extract_features(file_name, edges, dimension):
     total_triplets = dimension * (dimension - 1) * (dimension - 2) / 6
     features['clustering_coef'] = closed_triplets / total_triplets if dimension >= 3 else 0
 
-    spectral_features = compute_spectral_features(adjacency, laplacian)
-    features[file_name].update(spectral_features)
-
-    return features
-
-def compute_spectral_features(adjacency, laplacian):
-    features = {}
-
     # Adjacency eigenvalues
     eig_adj, _ = np.linalg.eig(adjacency)
     abs_eig_adj = np.abs(eig_adj)

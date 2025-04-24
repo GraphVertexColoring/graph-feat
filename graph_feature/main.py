@@ -34,7 +34,7 @@ def generate_feature_file(path, output_filename="InstanceFeatures.csv"):
         print("No new instances to process.")
         return
 
-    header = list(next(iter(features.values())).keys())
+    header = ['feature_' + feature for feature in list(next(iter(features.values())).keys()) if feature != 'source']
 
     with open(output_filename, mode="w", newline="") as file:
         writer = csv.writer(file)
