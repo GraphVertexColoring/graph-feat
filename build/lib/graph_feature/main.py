@@ -20,7 +20,7 @@ def calc_features(path):
 
     col_data = process_col_files(path)
 
-    with ThreadPoolExecutor(max_workers=4) as executor:
+    with ThreadPoolExecutor(max_workers=8) as executor:
         futures = {executor.submit(process_instance, file_path, edges, dimensions): file_path for file_path, edges, dimensions in col_data}
         for future in futures:
             thread_safe_update(future.result())
