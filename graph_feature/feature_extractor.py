@@ -9,9 +9,17 @@ def extract_features(file_name, edges, dimension):
 
     # Shortest Path Analysis
     dist_matrix = shortest_path(adjacency, dimension)
-    dist_matrix[dist_matrix == float('inf')] = 0
-    features['largest_dist'] = float(np.max(dist_matrix))
-    features['average_dist'] = float(np.nanmean(np.where(dist_matrix == np.inf, np.nan, dist_matrix)))
+
+    # Replace infinities with NaN temporarily for stats
+    dist_matrix_clean = np.where(dist_matrix == float('inf'), np.nan, dist_matrix)
+
+    # Defensive handling
+    if np.isnan(dist_matrix_clean).all():
+        features['largest_dist'] = 0.0
+        features['average_dist'] = 0.0
+    else:
+        features['largest_dist'] = float(np.nanmax(dist_matrix_clean))
+        features['average_dist'] = float(np.nanmean(dist_matrix_clean))
 
     # Degree-based Metrics
     degrees = np.diag(laplacian)
