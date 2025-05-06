@@ -1,3 +1,2 @@
-TODO:
-1. TEST the update 
-2. ensure that the package works as intended with the action.
+This directory contains a python package which is used for extracting a set features from DIMACS graph instances,
+These features are meant to be used to perform an Instance Space Analysis, and as such are printed to a file that can later be used to construct the appropriate metadata. 
