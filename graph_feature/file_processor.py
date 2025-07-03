@@ -1,3 +1,7 @@
+# graph_feature/file_processor.py
+# Copyright (c) 2025 Frederik M. Dam
+# This file is licensed under the GNU License.
+# See the LICENSE file in the project root for full license text.
 import os
 import shutil
 import gzip

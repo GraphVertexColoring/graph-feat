@@ -1,3 +1,8 @@
+# graph_feature/main.py
+# Copyright (c) 2025 Frederik M. Dam
+# This file is licensed under the GNU License.
+# See the LICENSE file in the project root for full license text.
+
 import os
 import csv
 from concurrent.futures import ThreadPoolExecutor

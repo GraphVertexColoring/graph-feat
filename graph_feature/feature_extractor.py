@@ -1,3 +1,7 @@
+# graph_feature/feature_extractor.py
+# Copyright (c) 2025 Frederik M. Dam
+# This file is licensed under the GNU License.
+# See the LICENSE file in the project root for full license text.
 import numpy as np
 import math
 from .matrix_utils import build_matrices
